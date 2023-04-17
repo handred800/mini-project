@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+    .container {
+        @apply max-w-5xl px-2 m-auto;
+    }
+
+    .btn {
+        @apply py-1 px-2 border hover:bg-gray-100;
+    }
+
+    .card {
+        @apply p-3 bg-white drop-shadow;
+    }
+}

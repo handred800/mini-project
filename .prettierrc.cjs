@@ -2,7 +2,7 @@ module.exports = {
   "trailingComma": "all",
   "tabWidth": 2,
   "semi": true,
-  "singleQuote": false,
+  "singleQuote": true,
   "printWidth": 120,
   "bracketSpacing": true
 }

@@ -9,8 +9,8 @@ export default function Home() {
       <div className="card">
         <ul>
           {projects.map(({ path, name }) => (
-            <li key={path} className="rounded-lg bg-transparent hover:bg-gray-100">
-              <Link className="flex py-3 px-5 ease-in-out duration-200" to={`/${path}`}>
+            <li key={path}>
+              <Link className="flex rounded-md py-3 px-5 bg-transparent hover:bg-gray-100 ease-in-out duration-200" to={`/${path}`}>
                 {name}
               </Link>
             </li>

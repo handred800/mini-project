@@ -8,10 +8,16 @@
     }
 
     .btn {
-        @apply py-1 px-2 border hover:bg-gray-100;
+        @apply py-1 px-3 border hover:bg-gray-100 block;
     }
 
+    .input-text {
+        @apply bg-gray-100 p-1 focus:outline-none border border-gray-200 focus:border-blue-500;
+    }
+    .checkbox {
+        @apply appearance-none text-white px-1.5 border before:content-['✓'] checked:before:text-slate-500;
+    }
     .card {
-        @apply p-3 bg-white drop-shadow;
+        @apply border rounded-md p-2 bg-white shadow-md duration-300;
     }
 }

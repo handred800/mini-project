@@ -52,22 +52,23 @@ export default function TodoList() {
   return (
     <div>
       <h1 className="text-2xl font-bold">this is TodoList</h1>
-      <form onSubmit={submitHandler}>
-        <select name="" id="" onChange={selectFilter}>
+      <form className="flex py-2" onSubmit={submitHandler}>
+        <select className="px-2 border" name="" id="" onChange={selectFilter}>
           <option value="null">全部</option>
           <option value="true">已完成</option>
           <option value="false">未完成</option>
         </select>
-        <input className="bg-gray-200 p-1" type="text" value={todoInputVal} onInput={inputHandler} />
+        <input className="input-text flex-auto" type="text" value={todoInputVal} onInput={inputHandler} />
         <button className="btn" type="submit">
           送出
         </button>
       </form>
       <ul>
         {filtedTodos.map((todo) => (
-          <li key={todo.id} title={todo.id}>
-            <label htmlFor={todo.id} className="flex">
+          <li key={todo.id}>
+            <label title={todo.id} htmlFor={todo.id} className="card flex flex-wrap justify-between items-center mb-2">
               <input
+                className="checkbox"
                 id={todo.id}
                 type="checkbox"
                 checked={todo.isCheck}
@@ -75,9 +76,9 @@ export default function TodoList() {
                   checkboxHandler(todo.id);
                 }}
               />
-              {todo.name}
+              <div className="px-2">{todo.name}</div>
               <button
-                className="btn"
+                className="btn bg-rose-500 text-white hover:bg-rose-700"
                 type="button"
                 onClick={() => {
                   deleteHandler(todo.id);

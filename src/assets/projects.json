@@ -1,7 +1,12 @@
 [
     {
         "path": "todolist",
-        "name": "todo list",
+        "name": "待辦清單",
+        "article": "https://handred800.notion.site/todo-list-bed6e96dbfbb40dc8f18142f0a550bff"
+    },
+    {
+        "path": "currency",
+        "name": "貨幣轉換",
         "article": "https://handred800.notion.site/todo-list-bed6e96dbfbb40dc8f18142f0a550bff"
     }
 ]

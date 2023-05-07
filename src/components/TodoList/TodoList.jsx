@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import TodoItem from './TodoItem';
 
 export default function TodoList() {
   const [todoInputVal, setTodoInputVal] = useState('');
@@ -28,7 +29,7 @@ export default function TodoList() {
     setFilter(val);
   }
 
-  function checkboxHandler(todoId) {
+  const checkboxHandler = (todoId) => {
     const renewTodos = todos.map((todo) => {
       if (todo.id !== todoId) return todo;
       return {
@@ -37,12 +38,12 @@ export default function TodoList() {
       };
     });
     setTodos(renewTodos);
-  }
+  };
 
-  function deleteHandler(todoId) {
+  const deleteHandler = (todoId) => {
     const renewTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(renewTodos);
-  }
+  };
 
   const filtedTodos = useMemo(() => {
     if (currentFilter === null) return todos;
@@ -66,27 +67,7 @@ export default function TodoList() {
       <ul>
         {filtedTodos.map((todo) => (
           <li key={todo.id}>
-            <label title={todo.id} htmlFor={todo.id} className="card flex flex-wrap justify-between items-center mb-2">
-              <input
-                className="checkbox"
-                id={todo.id}
-                type="checkbox"
-                checked={todo.isCheck}
-                onChange={() => {
-                  checkboxHandler(todo.id);
-                }}
-              />
-              <div className="px-2">{todo.name}</div>
-              <button
-                className="btn bg-rose-500 text-white hover:bg-rose-700"
-                type="button"
-                onClick={() => {
-                  deleteHandler(todo.id);
-                }}
-              >
-                X
-              </button>
-            </label>
+            <TodoItem todo={todo} deleteFunc={deleteHandler} checkFunc={checkboxHandler} />
           </li>
         ))}
       </ul>

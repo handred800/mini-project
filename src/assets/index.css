@@ -12,7 +12,7 @@
     }
 
     .input-text {
-        @apply bg-gray-100 p-1 focus:outline-none border border-gray-200 focus:border-blue-500;
+        @apply bg-white p-1 focus:outline-none border border-gray-200 focus:border-blue-500;
     }
     .checkbox {
         @apply appearance-none text-white px-1.5 border before:content-['✓'] checked:before:text-slate-500;

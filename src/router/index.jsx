@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import Page from '../pages/Page';
-import TodoList from '../components/TodoList';
-import Currency from '../components/Currency';
+import TodoList from '../pages/TodoList';
+import Currency from '../pages/Currency';
 
 const router = createBrowserRouter([
   {

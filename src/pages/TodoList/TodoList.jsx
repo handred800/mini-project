@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import TodoItem from './TodoItem';
 
 export default function TodoList() {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [todoInputVal, setTodoInputVal] = useState('');
   const [todos, setTodos] = useState([]);
   const [currentFilter, setFilter] = useState(null);
@@ -44,6 +45,19 @@ export default function TodoList() {
     const renewTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(renewTodos);
   };
+
+  useEffect(() => {
+    const saveData = sessionStorage.getItem('todo') || '[]';
+    setTodos(JSON.parse(saveData));
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      sessionStorage.setItem('todo', JSON.stringify(todos));
+    } else {
+      setIsLoaded(true);
+    }
+  }, [todos, isLoaded]);
 
   const filtedTodos = useMemo(() => {
     if (currentFilter === null) return todos;

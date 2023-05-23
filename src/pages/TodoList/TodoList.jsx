@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import TodoItem from './TodoItem';
 
 export default function TodoList() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [todoInputVal, setTodoInputVal] = useState('');
   const [todos, setTodos] = useState([]);
   const [currentFilter, setFilter] = useState(null);
@@ -47,17 +47,15 @@ export default function TodoList() {
   };
 
   useEffect(() => {
+    console.log('這裡');
     const saveData = sessionStorage.getItem('todo') || '[]';
     setTodos(JSON.parse(saveData));
   }, []);
 
   useEffect(() => {
-    if (isLoaded) {
-      sessionStorage.setItem('todo', JSON.stringify(todos));
-    } else {
-      setIsLoaded(true);
-    }
-  }, [todos, isLoaded]);
+    console.log(todos);
+    sessionStorage.setItem('todo', JSON.stringify(todos));
+  }, [todos]);
 
   const filtedTodos = useMemo(() => {
     if (currentFilter === null) return todos;
@@ -66,7 +64,7 @@ export default function TodoList() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">this is TodoList</h1>
+      <h1 className="text-2xl font-bold">待辦清單</h1>
       <form className="flex py-2" onSubmit={submitHandler}>
         <select className="px-2 border" name="" id="" onChange={selectFilter}>
           <option value="null">全部</option>

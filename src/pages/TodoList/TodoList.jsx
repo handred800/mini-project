@@ -47,13 +47,11 @@ export default function TodoList() {
   };
 
   useEffect(() => {
-    console.log('這裡');
     const saveData = sessionStorage.getItem('todo') || '[]';
     setTodos(JSON.parse(saveData));
   }, []);
 
   useEffect(() => {
-    console.log(todos);
     sessionStorage.setItem('todo', JSON.stringify(todos));
   }, [todos]);
 

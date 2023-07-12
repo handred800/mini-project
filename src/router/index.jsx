@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Page from '../pages/Page';
 import TodoList from '../pages/TodoList';
 import Currency from '../pages/Currency';
+import WeatherApp from '../pages/WeatherApp';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'currency',
         element: <Currency />,
+      },
+      {
+        path: 'weather',
+        element: <WeatherApp />,
       },
     ],
   },

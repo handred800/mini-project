@@ -8,5 +8,10 @@
         "path": "currency",
         "name": "貨幣轉換",
         "article": "https://handred800.notion.site/d362073db96242f48382663366b1a6fb"
+    },
+    {
+        "path": "weather",
+        "name": "天氣App",
+        "article": "https://www.notion.so/handred800/App-52a823fc9f1747efbfab340c01531f04"
     }
 ]

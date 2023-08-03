@@ -30,14 +30,25 @@ const API = {
       }, {});
     });
   },
-  day2(params) {
-    const mergedParams = Object.assign(params, { elementName: ['Wx', 'PoP12h', 'T', 'RH', 'CI'] });
-    return fetchWrapper('/F-D0047-089', mergedParams).then((data) => {
-      const infos = data.records.locations[0].location[0].weatherElement;
-      return infos.reduce((acc, current) => {
-        acc[current.elementName] = current.time[0].elementValue[0].value;
-        return acc;
-      }, {});
+  oneweek(params) {
+    const mergedParams = Object.assign(params, { elementName: ['Wx', 'PoP12h', 'T', 'RH'] });
+    return fetchWrapper('/F-D0047-091', mergedParams).then((data) => {
+      const infos = {};
+      data.records.locations[0].location[0].weatherElement
+        .forEach((info) => {
+          const { elementName, time } = info;
+          time.filter((item, i) => (i + 1) % 2 === 0).forEach(({ startTime, elementValue }) => {
+            const formatedDate = startTime.split(' ')[0];
+            if (infos[formatedDate] === undefined) {
+              infos[formatedDate] = { [elementName]: elementValue[0].value };
+            } else {
+              infos[formatedDate][elementName] = elementValue[0].value;
+            }
+          });
+        });
+      // console.log(infos);
+
+      return infos;
     });
   },
 };

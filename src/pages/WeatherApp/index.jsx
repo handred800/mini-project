@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import API from './api';
 import Carousel from './Carousel';
+import WeatherIcon from './WeatherIcon';
 
 const locations = [
   '宜蘭縣',
@@ -32,13 +33,16 @@ function printObj(obj) {
 }
 
 export default function WeatherApp() {
-  const [result, setResult] = useState({});
+  const [result, setResult] = useState([]);
   const [currentLoactaion, setLocation] = useState(locations[0]);
 
   useEffect(() => {
-    API.hr36({
-      locationName: currentLoactaion,
-    }).then((res) => {
+    const promiseQueue = [
+      API.hr36({ locationName: currentLoactaion }),
+      API.oneweek({ locationName: currentLoactaion }),
+    ];
+
+    Promise.all(promiseQueue).then((res) => {
       setResult(res);
     });
   }, [currentLoactaion]);
@@ -60,19 +64,30 @@ export default function WeatherApp() {
           </option>
         ))}
       </select>
-      <pre>{printObj(result)}</pre>
-      <Carousel>
-        <div className="flex justify-between">
-          <div>
-            <h2 className="text-2xl font-bold">{result.Wx}</h2>
-            <div className="text-gray-500">{result.CI}</div>
+      {result.length === 0 || (
+        <Carousel>
+          <div className="flex items-center py-10 px-20 text-slate-700">
+            <div className="flex-1">
+              <div className="text-7xl font-bold">
+                {result[0].MaxT}
+                <sup className="text-4xl align-super top-0">°C</sup>
+              </div>
+              <div className="text-lg font-bold">{result[0].Wx}</div>
+              <div className="text-gray-400">{result[0].CI}</div>
+              <details className="cursor-pointer opacity-0 hover:opacity-100">
+                <pre>{printObj(result[0])}</pre>
+              </details>
+            </div>
+            <div>
+              <WeatherIcon name={result[0].Wx} size="xxl" />
+            </div>
           </div>
-          <div>icon</div>
-        </div>
-        <div>BABOO</div>
-        <div>YEAH</div>
-      </Carousel>
-
+          <div>
+            <pre>{printObj(result[1])}</pre>
+          </div>
+          <div>YEAH</div>
+        </Carousel>
+      )}
     </div>
   );
 }

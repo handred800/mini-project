@@ -25,9 +25,10 @@ const table = new Proxy({
 
 const sizeTable = {
   xxl: 250,
-  md: 16,
+  md: 60,
+  xs: 14,
 };
 
 export default function WeatherIcon({ name, size }) {
-  return <Icon name={table[name]} size={sizeTable[size]} color="#757B87" />;
+  return <Icon name={table[name]} size={sizeTable[size]} color="#cbd4e1" />;
 }

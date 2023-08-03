@@ -38,7 +38,7 @@ const API = {
         .forEach((info) => {
           const { elementName, time } = info;
           time.filter((item, i) => (i + 1) % 2 === 0).forEach(({ startTime, elementValue }) => {
-            const formatedDate = startTime.split(' ')[0];
+            const formatedDate = new Date(startTime).toLocaleString('zh-TW', { month: 'numeric', day: 'numeric' });
             if (infos[formatedDate] === undefined) {
               infos[formatedDate] = { [elementName]: elementValue[0].value };
             } else {

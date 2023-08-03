@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import API from './api';
 import Carousel from './Carousel';
 import WeatherIcon from './WeatherIcon';
+import Icon from './Icon';
 
 const locations = [
   '宜蘭縣',
@@ -34,6 +35,7 @@ function printObj(obj) {
 
 export default function WeatherApp() {
   const [result, setResult] = useState([]);
+  const [isDebugMode, setDebugMode] = useState(false);
   const [currentLoactaion, setLocation] = useState(locations[0]);
 
   useEffect(() => {
@@ -49,41 +51,76 @@ export default function WeatherApp() {
   return (
     <div>
       <h1 className="text-2xl font-bold">天氣 APP</h1>
-      <select
-        className="border p-2"
-        name=""
-        id=""
-        onChange={(e) => {
-          setLocation(e.target.value);
-        }}
-        value={currentLoactaion}
-      >
-        {locations.map((name) => (
-          <option value={name} key={name}>
-            {name}
-          </option>
-        ))}
-      </select>
+      <div className="flex py-2">
+        <select
+          className="border p-2"
+          name=""
+          id=""
+          onChange={(e) => {
+            setLocation(e.target.value);
+          }}
+          value={currentLoactaion}
+        >
+          {locations.map((name) => (
+            <option value={name} key={name}>
+              {name}
+            </option>
+          ))}
+        </select>
+        <input
+          type="checkbox"
+          className="checkbox"
+          value={isDebugMode}
+          onChange={() => {
+            setDebugMode(!isDebugMode);
+          }}
+        />
+        debug mode
+      </div>
       {result.length === 0 || (
         <Carousel>
-          <div className="flex items-center py-10 px-20 text-slate-700">
-            <div className="flex-1">
-              <div className="text-7xl font-bold">
-                {result[0].MaxT}
+          <div className="flex justify-center items-center p-5 text-slate-700">
+            <div className="px-10">
+              <div className="text-5xl font-bold">
+                {`${result[0].MaxT}~${result[0].MinT}`}
                 <sup className="text-4xl align-super top-0">°C</sup>
               </div>
               <div className="text-lg font-bold">{result[0].Wx}</div>
               <div className="text-gray-400">{result[0].CI}</div>
-              <details className="cursor-pointer opacity-0 hover:opacity-100">
-                <pre>{printObj(result[0])}</pre>
-              </details>
+              {isDebugMode && <pre className="code-panel">{printObj(result[0])}</pre>}
             </div>
             <div>
               <WeatherIcon name={result[0].Wx} size="xxl" />
             </div>
           </div>
-          <div>
-            <pre>{printObj(result[1])}</pre>
+          <div className="flex items-center h-full">
+            <div className="flex flex-wrap flex-1">
+              {Object.keys(result[1]).map((date) => (
+                <div className="flex flex-col items-center flex-1 text-center px-2 py-3 relative group hover:bg-slate-100 rounded-md duration-300" key={date}>
+                  <div className="text-lg font-bold">{date}</div>
+                  <div className="py-2">
+                    <WeatherIcon name={result[1][date].Wx} size="md" />
+                  </div>
+                  <div className="text-sm text-slate-400 group-hover:text-slate-800 group-hover:font-bold duration-300">
+                    <div>
+                      降雨率：
+                      {result[1][date].PoP12h !== ' ' ? `${result[1][date].PoP12h}%` : '--'}
+                    </div>
+                    <div>
+                      溫度：
+                      {result[1][date].T}
+                      <sup>°C</sup>
+                    </div>
+                    <div>
+                      濕度：
+                      {result[1][date].RH}
+                      %
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {isDebugMode && <pre className="code-panel">{printObj(result[1])}</pre>}
           </div>
           <div>YEAH</div>
         </Carousel>

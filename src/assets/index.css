@@ -23,4 +23,7 @@
     .code-panel {
         @apply py-2 px-3 bg-slate-200 max-h-[500px] overflow-y-auto;
     }
+    .svg-responsive svg{
+        @apply w-full;
+    }
 }

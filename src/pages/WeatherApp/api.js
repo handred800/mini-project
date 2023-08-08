@@ -23,15 +23,27 @@ function fetchWrapper(endpointPath, paramsObj) {
 const API = {
   hr36(params) {
     return fetchWrapper('/F-C0032-001', params).then((data) => {
-      const infos = data.records.location[0].weatherElement;
-      return infos.reduce((acc, current) => {
-        acc[current.elementName] = current.time[0].parameter.parameterName;
-        return acc;
-      }, {});
+      const infos = {};
+      data.records.location[0].weatherElement
+        .forEach((info) => {
+          const { elementName, time } = info;
+          time.forEach(({ startTime, parameter }) => {
+            const formatedDate = new Date(startTime).toLocaleString('zh-TW', {
+              month: 'numeric', day: 'numeric', hour12: false, hour: 'numeric', minute: 'numeric',
+            });
+            if (infos[formatedDate] === undefined) {
+              infos[formatedDate] = { [elementName]: parameter.parameterName };
+            } else {
+              infos[formatedDate][elementName] = parameter.parameterName;
+            }
+          });
+        });
+
+      return infos;
     });
   },
   oneweek(params) {
-    const mergedParams = Object.assign(params, { elementName: ['Wx', 'PoP12h', 'T', 'RH'] });
+    const mergedParams = Object.assign(params, { elementName: ['Wx', 'PoP12h', 'T', 'RH', 'UVI'] });
     return fetchWrapper('/F-D0047-091', mergedParams).then((data) => {
       const infos = {};
       data.records.locations[0].location[0].weatherElement
